@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keitaro Wrapper</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/app.css') }}">
+</head>
+<body>
+  <header>
+    <div>
+      <span class="brand">K</span>
+      <strong>Keitaro Wrapper</strong>
+    </div>
+    <span class="status {{ 'ok' if configured else 'warn' }}">
+      {{ 'API настроен' if configured else 'Заполните .env' }}
+    </span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h1>Новая кампания</h1>
+      <p class="muted">Имя будет создано с префиксом <code>{{ prefix }}</code>.</p>
+      <form id="create-form" class="create-grid">
+        <label>Название<input name="name" required placeholder="campaign1"></label>
+        <label>Гео<input name="geo" required minlength="2" maxlength="2" placeholder="AU"></label>
+        <label>ID оффера<input name="offer_id" required type="number" min="1" placeholder="3749"></label>
+        <button type="submit">Создать</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div>
+          <h1>Редактор кампании</h1>
+          <p class="muted">Черновики хранятся локально до Push to KT.</p>
+        </div>
+        <div class="campaign-picker">
+          <select id="campaign-select"><option value="">Выберите кампанию</option></select>
+          <button id="refresh-campaigns" class="secondary">Обновить список</button>
+          <button id="fetch-streams">Fetch streams</button>
+        </div>
+      </div>
+      <div id="streams" class="streams empty">Выберите кампанию и загрузите потоки.</div>
+    </section>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <script src="{{ url_for('static', path='/app.js') }}"></script>
+</body>
+</html>
+
